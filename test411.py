@@ -40,9 +40,23 @@ Created on Mon Apr 11 11:34:13 2022
 # =============================================================================
 
 import streamlit as st
+import pandas as pd
 
-option = st.selectbox(
-     'How would you like to be contacted?',
-     ('Email', 'Home phone', 'Mobile phone'))
+# =============================================================================
+# option = st.selectbox(
+#      'How would you like to be contacted?',
+#      ('Email', 'Home phone', 'Mobile phone'))
+# 
+# st.write('You selected:', option)
+# =============================================================================
 
-st.write('You selected:', option)
+st.header("車機即時位置與車速")
+st.write("自動接收訊號")
+uploaded_file=st.file_uploader("人工輸入檔案(略)",type=".csv")
+st.header("")
+
+if uploaded_file:
+    df=pd.read_csv(uploaded_file)
+    map_data=df[["<latitude>", "<longitude>"]]        
+    map_data.columns=['lat','lon']
+    st.map(map_data)
